@@ -42,8 +42,23 @@ func mmdeGetDefaultAudioEndpoint(mmde *IMMDeviceEnumerator, eDataFlow, stateMask
 	return
 }
 
-func mmdeGetDevice() (err error) {
-	return ole.NewError(ole.E_NOTIMPL)
+func mmdeGetDevice(mmde *IMMDeviceEnumerator, deviceID string, mmd **IMMDevice) (err error) {
+	deviceIDPtr, err := syscall.UTF16PtrFromString(deviceID)
+	if err != nil {
+		return err
+	}
+
+	hr, _, _ := syscall.Syscall(
+		mmde.VTable().GetDevice,
+		3,
+		uintptr(unsafe.Pointer(mmde)),
+		uintptr(unsafe.Pointer(deviceIDPtr)),
+		uintptr(unsafe.Pointer(mmd)),
+	)
+	if hr != 0 {
+		err = ole.NewError(hr)
+	}
+	return
 }
 
 func mmdeRegisterEndpointNotificationCallback(mmde *IMMDeviceEnumerator, mmnc *IMMNotificationClient) (err error) {

@@ -1,5 +1,7 @@
 # go-wca
 
+Merged some functions from [emarj@tip](https://github.com/emarj/go-wca/tree/tip)
+
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)][license]
 
 [license]: https://github.com/moutend/go-wca/blob/develop/LICENSE
